@@ -25,3 +25,23 @@ This single command launches the interface, loads the backend, and starts the re
 
 Developer:
 © All rights reserved by Srajan Shetty
+<p align="center">
+  <img src="interface.png" width="900">
+</p>
+<p align="center">
+  <img src="home.png" width="900">
+</p>
+<p align="center">
+  <img src="chat.png" width="900">
+</p>
+<p align="center">
+  <img src="chats.png" width="900">
+</p>
+<p align="center">
+  <img src="settings.png" width="900">
+</p>
+
+
+
+
+
