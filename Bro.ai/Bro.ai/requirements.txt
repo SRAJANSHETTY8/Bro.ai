@@ -1,0 +1,10 @@
+pywebview
+SpeechRecognition
+pyaudio
+pyttsx3
+pillow
+pyautogui
+psutil
+requests
+python-dotenv
+langdetect

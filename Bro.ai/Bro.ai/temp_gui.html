@@ -1,0 +1,1489 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bro.ai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Monsieur+La+Doulaise&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #0a0e27 0%, #0f1419 100%);
+        color: #ffffff;
+        height: 100vh;
+        overflow: hidden;
+      }
+      
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+        background: rgba(10, 14, 39, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+        z-index: 100;
+      }
+      
+      .logo {
+        font-size: 28px;
+        font-weight: bold;
+        color: #00ffff;
+        letter-spacing: 2px;
+        font-family: 'Poppins', sans-serif;
+      }
+      
+      .header-buttons {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+      
+      .icon-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: rgba(0, 255, 255, 0.1);
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+      
+      .icon-btn:hover {
+        background: rgba(0, 255, 255, 0.2);
+        border-color: rgba(0, 255, 255, 0.5);
+        transform: translateY(-2px);
+      }
+      
+      .icon-btn svg {
+        width: 20px;
+        height: 20px;
+        fill: #00ffff;
+      }
+      
+      .main-container {
+        padding-top: 70px;
+        height: 100vh;
+        position: relative;
+      }
+      
+      #homeScreen {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        z-index: 2;
+      }
+      
+      #homeScreen.hidden {
+        opacity: 0;
+        transform: scale(0.95);
+        pointer-events: none;
+      }
+      
+      .globe-container {
+        width: 400px;
+        height: 400px;
+        position: relative;
+        margin-bottom: 40px;
+      }
+      
+      .waveform {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      
+      .waveform-circle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 3px solid #00ffff;
+        border-radius: 50%;
+        animation: pulse 2s ease-in-out infinite;
+      }
+      
+      .waveform-circle.outer {
+        width: 350px;
+        height: 350px;
+        opacity: 0.3;
+      }
+      
+      .waveform-circle.middle {
+        width: 280px;
+        height: 280px;
+        opacity: 0.5;
+        animation-delay: 0.3s;
+      }
+      
+      .waveform-circle.inner {
+        width: 200px;
+        height: 200px;
+        opacity: 0.7;
+        animation-delay: 0.6s;
+      }
+      
+      .waveform-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 30px;
+        height: 30px;
+        background: #00ffff;
+        border-radius: 50%;
+        box-shadow: 0 0 30px #00ffff;
+      }
+      
+      @keyframes pulse {
+        0%, 100% {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0.3;
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.1);
+          opacity: 0.6;
+        }
+      }
+      
+      .status-text {
+        font-size: 24px;
+        color: #00ffff;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+      
+      .input-area {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 800px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      
+      .input-container {
+        width: 100%;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+      
+      .text-input {
+        flex: 1;
+        padding: 18px 25px;
+        background: rgba(15, 20, 35, 0.8);
+        border: 2px solid rgba(0, 255, 255, 0.3);
+        border-radius: 25px;
+        color: #ffffff;
+        font-size: 16px;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+      
+      .text-input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+      
+      .text-input:focus {
+        border-color: #00ffff;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      }
+      
+      .send-btn {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #00bcd4, #00ffff);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+      }
+      
+      .send-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(0, 255, 255, 0.6);
+      }
+      
+      .send-btn svg {
+        width: 24px;
+        height: 24px;
+        fill: #fff;
+      }
+      
+      .mic-button {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(0, 188, 212, 0.2);
+        border: 3px solid #00bcd4;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+      
+      .mic-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+      }
+      
+      .mic-button.active {
+        background: linear-gradient(135deg, #00bcd4, #00ffff);
+        animation: micPulse 1.5s ease-in-out infinite;
+      }
+      
+      @keyframes micPulse {
+        0%, 100% {
+          box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 40px rgba(0, 255, 255, 0.8);
+        }
+      }
+      
+      .mic-button svg {
+        width: 32px;
+        height: 32px;
+        fill: #00ffff;
+      }
+      
+      .mic-button.active svg {
+        fill: #ffffff;
+      }
+      
+      .mic-label {
+        margin-top: 15px;
+        font-size: 16px;
+        color: #00ffff;
+      }
+      
+      #chatScreen {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #0a0e27 0%, #0f1419 100%);
+        display: flex;
+        flex-direction: column;
+        opacity: 0;
+        transform: translateY(50px);
+        pointer-events: none;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        z-index: 1;
+      }
+      
+      #chatScreen.active {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: all;
+      }
+      
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 70px;
+        bottom: 0;
+        width: 280px;
+        background: rgba(10, 14, 39, 0.95);
+        border-right: 1px solid rgba(0, 255, 255, 0.1);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .sidebar-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 20px;
+        position: relative;
+      }
+      
+      .sidebar-icon canvas {
+        width: 60px;
+        height: 60px;
+      }
+      
+      .home-btn {
+        width: 100%;
+        padding: 15px;
+        background: rgba(0, 188, 212, 0.1);
+        border: 1px solid rgba(0, 188, 212, 0.3);
+        border-radius: 10px;
+        color: #00ffff;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: center;
+      }
+      
+      .home-btn:hover {
+        background: rgba(0, 188, 212, 0.2);
+        transform: translateY(-2px);
+      }
+      
+      .home-btn svg {
+        width: 20px;
+        height: 20px;
+        fill: #00ffff;
+      }
+      
+      .chat-container {
+        flex: 1;
+        margin-left: 280px;
+        padding: 30px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .chat-input-fixed {
+        margin-top: 20px;
+        gap: 15px;
+        display: flex;
+      }
+      
+      .mic-status {
+        text-align: center;
+        padding: 15px;
+        background: rgba(0, 188, 212, 0.1);
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+      
+      .mic-status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #666;
+      }
+      
+      .mic-status.active .mic-status-dot {
+        background: #00ffff;
+        box-shadow: 0 0 10px #00ffff;
+        animation: blink 1s infinite;
+      }
+      
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+      }
+      
+      .clear-chat {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+        color: #ff4444;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      
+      .clear-chat:hover {
+        color: #ff6666;
+      }
+      
+      .chat-messages {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding-bottom: 20px;
+      }
+      
+      .message {
+        max-width: 70%;
+        padding: 18px 24px;
+        border-radius: 20px;
+        font-size: 15px;
+        line-height: 1.6;
+        animation: slideIn 0.3s ease;
+      }
+      
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .message.user {
+        align-self: flex-end;
+        background: linear-gradient(135deg, #00bcd4, #00ffff);
+        color: #ffffff;
+        border-bottom-right-radius: 5px;
+      }
+      
+      .message.assistant {
+        align-self: flex-start;
+        background: rgba(0, 188, 212, 0.1);
+        border: 1px solid rgba(0, 188, 212, 0.3);
+        color: #ffffff;
+        border-bottom-left-radius: 5px;
+      }
+      
+      .message-sender {
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        opacity: 0.8;
+      }
+      
+      .message.user .message-sender {
+        text-align: right;
+      }
+      
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: rgba(0, 255, 255, 0.3);
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 255, 255, 0.5);
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal.active {
+        display: flex;
+      }
+
+      .modal-content {
+        background: rgba(10, 14, 39, 0.98);
+        border: 2px solid rgba(0, 255, 255, 0.3);
+        border-radius: 15px;
+        padding: 40px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
+      }
+
+      .modal-title {
+        font-size: 24px;
+        color: #00ffff;
+        margin-bottom: 30px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-group label {
+        display: block;
+        color: #00ffff;
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 15px;
+        background: rgba(15, 20, 35, 0.8);
+        border: 2px solid rgba(0, 255, 255, 0.3);
+        border-radius: 10px;
+        color: #ffffff;
+        font-size: 14px;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        border-color: #00ffff;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      }
+
+      .form-group input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      .modal-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-end;
+        margin-top: 30px;
+      }
+
+      .modal-btn {
+        padding: 12px 25px;
+        border-radius: 8px;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+      }
+
+      .modal-btn.save {
+        background: linear-gradient(135deg, #00bcd4, #00ffff);
+        color: #ffffff;
+      }
+
+      .modal-btn.save:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+      }
+
+      .modal-btn.cancel {
+        background: rgba(0, 255, 255, 0.1);
+        color: #00ffff;
+        border: 1px solid rgba(0, 255, 255, 0.3);
+      }
+
+      .modal-btn.cancel:hover {
+        background: rgba(0, 255, 255, 0.2);
+      }
+
+      #mainLandingPage {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #0a0e27 0%, #0f1419 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 3000;
+        padding: 40px 20px;
+      }
+
+      #mainLandingPage.hidden {
+        display: none;
+      }
+
+      .landing-page-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        max-width: 1400px;
+        width: 100%;
+        align-items: center;
+      }
+
+      .landing-left {
+        color: white;
+      }
+
+      .landing-title {
+        font-size: 72px;
+        font-weight: bold;
+        line-height: 1.2;
+        margin-bottom: 30px;
+      }
+
+      .landing-title-br {
+        color: #00ffff;
+      }
+
+      .landing-subtitle {
+        font-size: 48px;
+        font-weight: bold;
+        line-height: 1.2;
+        margin-bottom: 30px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .landing-description {
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 40px;
+        line-height: 1.6;
+      }
+
+      .landing-buttons {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
+
+      .landing-btn {
+        padding: 15px 40px;
+        border-radius: 50px;
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .landing-btn.primary {
+        background: linear-gradient(135deg, #00bcd4, #00ffff);
+        color: #0a0e27;
+      }
+
+      .landing-btn.primary:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+      }
+
+      .landing-btn.secondary {
+        background: transparent;
+        border: 2px solid #00bcd4;
+        color: #00bcd4;
+      }
+
+      .landing-btn.secondary:hover {
+        background: rgba(0, 188, 212, 0.1);
+        border-color: #00ffff;
+        color: #00ffff;
+      }
+
+      .landing-right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .landing-illustration {
+        width: 100%;
+        max-width: 500px;
+        background: rgba(0, 188, 212, 0.1);
+        border-radius: 20px;
+        padding: 40px;
+        position: relative;
+      }
+
+      .brain-illustration {
+        width: 100%;
+        height: 400px;
+      }
+
+      @media (max-width: 1024px) {
+        .landing-page-container {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+
+        .landing-title {
+          font-size: 48px;
+        }
+
+        .landing-subtitle {
+          font-size: 32px;
+        }
+
+        .landing-right {
+          width: 100%;
+        }
+      }
+
+      .landing-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        text-align: center;
+        background: linear-gradient(to top, rgba(10, 14, 39, 0.95), rgba(10, 14, 39, 0));
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.5);
+        z-index: 999;
+      }
+
+      .landing-footer a {
+        color: #00ffff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .landing-footer a:hover {
+        color: #00bcd4;
+        text-decoration: underline;
+      }
+
+      #loginScreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #0a0e27 0%, #0f1419 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+      }
+
+      #loginScreen.hidden {
+        display: none;
+      }
+
+      .login-container {
+        background: rgba(10, 14, 39, 0.98);
+        border: 2px solid rgba(0, 255, 255, 0.3);
+        border-radius: 15px;
+        padding: 50px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
+      }
+
+      .login-title {
+        font-size: 32px;
+        color: #00ffff;
+        margin-bottom: 40px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .icon-selector {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+
+      .icon-option {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: rgba(0, 188, 212, 0.2);
+        border: 3px solid rgba(0, 255, 255, 0.3);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        transition: all 0.3s ease;
+      }
+
+      .icon-option:hover {
+        transform: scale(1.1);
+        border-color: #00ffff;
+      }
+
+      .icon-option.selected {
+        background: linear-gradient(135deg, #00bcd4, #00ffff);
+        border-color: #00ffff;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+      }
+
+      .profile-display {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .profile-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(0, 188, 212, 0.2);
+        border: 2px solid rgba(0, 255, 255, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+      }
+
+      .profile-name {
+        color: #00ffff;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    </style>
+    </head>
+    <body>
+      <div id="mainLandingPage">
+        <div class="landing-page-container">
+          <div class="landing-left">
+            <div>
+              <div class="landing-title">
+                Meet <span class="landing-title-br">BroAI</span>
+              </div>
+              <div class="landing-subtitle">
+                Your Intelligent Digital Partner
+              </div>
+              <div class="landing-description">
+                Chat. Create. Code. Think. BroAI does it all.
+              </div>
+              <div class="landing-buttons">
+                <button class="landing-btn primary" id="tryBroAiBtn">Try BroAI Now →</button>
+              </div>
+            </div>
+          </div>
+          <div class="landing-right">
+            <div class="landing-illustration">
+              <img src="robot.png" alt="Bro.ai Robot">
+            </div>
+          </div>
+        </div>
+        <div class="landing-footer">
+          © All rights reserved by Srajan Shetty
+        </div>
+      </div>
+
+      <div id="loginScreen">
+        <div class="login-container">
+          <div class="login-title">Welcome to Bro.ai</div>
+          
+          <div>
+            <div class="form-group">
+              <label for="loginName">Your Name</label>
+              <input type="text" id="loginName" placeholder="Enter your name" maxlength="30">
+            </div>
+            
+            <div class="form-group">
+              <label>Choose Your Icon</label>
+              <div class="icon-selector">
+                <div class="icon-option" data-icon="🐼">🐼</div>
+                <div class="icon-option" data-icon="🐮">🐮</div>
+                <div class="icon-option" data-icon="🐧">🐧</div>
+                <div class="icon-option" data-icon="🦓">🦓</div>
+                <div class="icon-option" data-icon="🐿️">🐿️</div>
+                <div class="icon-option" data-icon="🦭">🦭</div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="loginLocation">Your Location</label>
+              <input type="text" id="loginLocation" placeholder="Enter your location (e.g., New York, India)" maxlength="50">
+            </div>
+            
+            <button class="modal-btn save" id="loginBtn" style="width: 100%; margin-top: 30px;">Login</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="header">
+        <div class="logo">Bro.ai</div>
+        <div class="header-buttons">
+          <div class="profile-display" id="profileDisplay" style="display: none; gap: 10px; margin-right: 20px;">
+            <div class="profile-icon" id="profileIcon">👨</div>
+            <div class="profile-name" id="profileName">User</div>
+          </div>
+          <button class="icon-btn" id="chatToggleBtn" title="Toggle Chat">
+            <svg viewBox="0 0 24 24">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            </svg>
+          </button>
+          <button class="icon-btn" title="Settings">
+            <svg viewBox="0 0 24 24">
+              <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="main-container">
+        <div id="homeScreen">
+          <div class="globe-container">
+            <canvas id="glowCircle" width="400" height="400"></canvas>
+          </div>
+          
+          <div class="input-area">
+            <div class="input-container">
+              <input type="text" class="text-input" placeholder="Ask me anything..." id="textInput">
+              <button class="send-btn" id="sendBtn">
+                <svg viewBox="0 0 24 24">
+                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                </svg>
+              </button>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <button class="mic-button" id="micButton">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="chatScreen">
+          <div class="sidebar">
+            <div class="sidebar-icon">
+              <canvas id="sidebarGlowCircle" width="60" height="60"></canvas>
+            </div>
+            
+            <button class="home-btn" id="homeBtn">
+              <svg viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              </svg>
+              Home
+            </button>
+          </div>
+          
+          <div class="chat-container">
+            <div class="mic-status" id="micStatusDisplay">
+              <div class="mic-status-dot"></div>
+              <span>Microphone Off</span>
+            </div>
+            
+            <div class="clear-chat" id="clearChatBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+              </svg>
+              Clear Chat
+            </div>
+            
+            <div class="chat-messages" id="chatMessages"></div>
+            
+            <div class="input-container chat-input-fixed">
+              <input type="text" class="text-input" placeholder="Ask me anything..." id="chatTextInput" style="flex: 1; padding: 18px 25px; background: rgba(15, 20, 35, 0.8); border: 2px solid rgba(0, 255, 255, 0.3); border-radius: 25px; color: #ffffff; font-size: 16px; outline: none; transition: all 0.3s ease;">
+              <button class="send-btn" id="chatSendBtn" style="width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, #00bcd4, #00ffff); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);">
+                <svg viewBox="0 0 24 24" style="width: 24px; height: 24px; fill: #fff;">
+                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="settingsModal">
+        <div class="modal-content">
+          <div class="modal-title">Settings</div>
+          
+          <div class="form-group">
+            <label for="usernameInput">Username</label>
+            <input type="text" id="usernameInput" placeholder="Enter your username" maxlength="30">
+          </div>
+          
+          <div class="form-group">
+            <label for="locationSelect">Location</label>
+            <select id="locationSelect">
+              <option value="">Select your location</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Kolkata">Kolkata</option>
+              <option value="Chennai">Chennai</option>
+              <option value="Madhya Pradesh">Madhya Pradesh</option>
+              <option value="Gujarat">Gujarat</option>
+              <option value="Punjab">Punjab</option>
+              <option value="Rajasthan">Rajasthan</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          
+          <div class="modal-buttons">
+            <button class="modal-btn cancel" id="cancelBtn">Cancel</button>
+            <button class="modal-btn save" id="saveBtn">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        let chatData = [];
+        let micOn = false;
+        let onChatScreen = false;
+        
+        // Store API reference
+        window.broaiAPI = null;
+
+        const mainLandingPage = document.getElementById('mainLandingPage');
+        const homeScreen = document.getElementById('homeScreen');
+        const chatScreen = document.getElementById('chatScreen');
+        const micButton = document.getElementById('micButton');
+        const statusText = document.getElementById('statusText');
+        const micLabel = document.getElementById('micLabel');
+        const chatToggleBtn = document.getElementById('chatToggleBtn');
+        const homeBtn = document.getElementById('homeBtn');
+        const chatMessages = document.getElementById('chatMessages');
+        const micStatusDisplay = document.getElementById('micStatusDisplay');
+        const textInput = document.getElementById('textInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const clearChatBtn = document.getElementById('clearChatBtn');
+        const chatTextInput = document.getElementById('chatTextInput');
+        const chatSendBtn = document.getElementById('chatSendBtn');
+        const settingsBtn = document.querySelector('button[title="Settings"]');
+        const settingsModal = document.getElementById('settingsModal');
+        const usernameInput = document.getElementById('usernameInput');
+        const locationSelect = document.getElementById('locationSelect');
+        const saveBtn = document.getElementById('saveBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const loginScreen = document.getElementById('loginScreen');
+        const loginName = document.getElementById('loginName');
+        const loginLocation = document.getElementById('loginLocation');
+        const loginBtn = document.getElementById('loginBtn');
+        const tryBroAiBtn = document.getElementById('tryBroAiBtn');
+        const profileDisplay = document.getElementById('profileDisplay');
+        const profileIcon = document.getElementById('profileIcon');
+        const profileName = document.getElementById('profileName');
+
+        let selectedIcon = '👨';
+
+        // Icon selector functionality
+        document.querySelectorAll('.icon-option').forEach(option => {
+          option.addEventListener('click', () => {
+            document.querySelectorAll('.icon-option').forEach(o => o.classList.remove('selected'));
+            option.classList.add('selected');
+            selectedIcon = option.getAttribute('data-icon');
+          });
+        });
+
+        
+        tryBroAiBtn.addEventListener('click', () => {
+          mainLandingPage.classList.add('hidden');
+          loginScreen.classList.remove('hidden');
+          // Reset form
+          loginName.value = '';
+          loginLocation.value = '';
+          selectedIcon = '';
+          document.querySelectorAll('.icon-option').forEach(o => o.classList.remove('selected'));
+        });
+
+        // Check if user is logged in
+        function checkUserLogin() {
+          const savedName = localStorage.getItem('bro_user_name');
+          const savedIcon = localStorage.getItem('bro_user_icon');
+          
+          if (savedName && savedIcon) {
+            mainLandingPage.classList.add('hidden');
+            loginScreen.classList.add('hidden');
+            displayUserProfile(savedName, savedIcon);
+          } else {
+            mainLandingPage.classList.remove('hidden');
+            loginScreen.classList.add('hidden');
+          }
+        }
+
+        // Display user profile
+        function displayUserProfile(name, icon) {
+          profileDisplay.style.display = 'flex';
+          profileName.textContent = name;
+          profileIcon.textContent = icon;
+        }
+
+        // Login button functionality
+        loginBtn.addEventListener('click', () => {
+          const name = loginName.value.trim();
+          const location = loginLocation.value.trim();
+          
+          if (name && selectedIcon) {
+            localStorage.setItem('bro_user_name', name);
+            localStorage.setItem('bro_user_icon', selectedIcon);
+            localStorage.setItem('bro_user_location', location);
+            
+            console.log('User logged in - Name: ' + name + ', Icon: ' + selectedIcon + ', Location: ' + location);
+            loginScreen.classList.add('hidden');
+            displayUserProfile(name, selectedIcon);
+          } else {
+            alert('Please enter your name and select an icon');
+          }
+        });
+
+        // Allow Enter key to submit login
+        loginName.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            loginBtn.click();
+          }
+        });
+
+        loginLocation.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            loginBtn.click();
+          }
+        });
+
+        // Load settings
+        function loadSettings() {
+          const savedUsername = localStorage.getItem('bro_username') || '';
+          const savedLocation = localStorage.getItem('bro_location') || '';
+          usernameInput.value = savedUsername;
+          locationSelect.value = savedLocation;
+        }
+
+        // Save settings
+        function saveSettings() {
+          const username = usernameInput.value.trim();
+          const location = locationSelect.value;
+          
+          localStorage.setItem('bro_username', username);
+          localStorage.setItem('bro_location', location);
+          
+          console.log('Settings saved - Username: ' + username + ', Location: ' + location);
+          closeSettingsModal();
+        }
+
+        // Open settings modal
+        function openSettingsModal() {
+          settingsModal.classList.add('active');
+        }
+
+        // Close settings modal
+        function closeSettingsModal() {
+          settingsModal.classList.remove('active');
+        }
+
+        // Settings button click
+        settingsBtn.addEventListener('click', () => {
+          openSettingsModal();
+        });
+
+        // Save button click
+        saveBtn.addEventListener('click', () => {
+          saveSettings();
+        });
+
+        // Cancel button click
+        cancelBtn.addEventListener('click', () => {
+          closeSettingsModal();
+        });
+
+        // Close modal on outside click
+        settingsModal.addEventListener('click', (e) => {
+          if (e.target === settingsModal) {
+            closeSettingsModal();
+          }
+        });
+
+        // Load settings on page load
+        loadSettings();
+        
+        // Check user login on page load
+        checkUserLogin();
+
+        micButton.addEventListener('click', () => {
+          micOn = !micOn;
+          micButton.classList.toggle('active', micOn);
+          
+          if (micOn) {
+            statusText.textContent = 'Listening...';
+            micLabel.textContent = 'Recording your voice...';
+            micStatusDisplay.innerHTML = `
+              <div class="mic-status-dot"></div>
+              <span>Microphone On - Listening...</span>
+            `;
+            micStatusDisplay.classList.add('active');
+          } else {
+            micStatusDisplay.innerHTML = `
+              <div class="mic-status-dot"></div>
+              <span>Microphone Off</span>
+            `;
+            micStatusDisplay.classList.remove('active');
+          }
+          
+          window.pywebview.api.toggle_mic().then(response => {
+            console.log('Mic toggled:', response);
+          }).catch(err => {
+            console.error('Error toggling mic:', err);
+          });
+        });
+
+        function showChatScreen() {
+          onChatScreen = true;
+          homeScreen.classList.add('hidden');
+          chatScreen.classList.add('active');
+        }
+
+        function showHomeScreen() {
+          onChatScreen = false;
+          homeScreen.classList.remove('hidden');
+          chatScreen.classList.remove('active');
+        }
+
+        chatToggleBtn.addEventListener('click', () => {
+          if (onChatScreen) {
+            showHomeScreen();
+          } else {
+            showChatScreen();
+          }
+        });
+
+        homeBtn.addEventListener('click', () => {
+          showHomeScreen();
+        });
+
+        function renderMessages(data) {
+          if (!data || data.length === 0) {
+            chatMessages.innerHTML = `
+              <div style="text-align: center; color: #666; padding: 40px;">
+                <p>No messages yet. Start a conversation!</p>
+              </div>
+            `;
+            return;
+          }
+          
+          chatMessages.innerHTML = '';
+          
+          data.forEach(msg => {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            
+            if (msg.role === 'user') {
+              messageDiv.classList.add('user');
+              messageDiv.innerHTML = `
+                <div class="message-sender">You</div>
+                <div>${escapeHtml(msg.content)}</div>
+              `;
+            } else {
+              messageDiv.classList.add('assistant');
+              messageDiv.innerHTML = `
+                <div class="message-sender">bro</div>
+                <div>${escapeHtml(msg.content)}</div>
+              `;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+          });
+          
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+          const div = document.createElement('div');
+          div.textContent = text;
+          return div.innerHTML;
+        }
+
+        function processQuery(message) {
+          if (!message.trim()) return;
+          
+          // Add user message to chat data
+          const userMessage = {
+            role: 'user',
+            content: message
+          };
+          chatData.push(userMessage);
+          
+          // Render messages immediately
+          renderMessages(chatData);
+          
+          // Show chat screen
+          showChatScreen();
+          
+          // Send query to backend for processing
+          window.pywebview.api.submit_text_query(message).then(response => {
+            console.log('Query sent to backend:', response);
+          }).catch(err => {
+            console.error('Error submitting query:', err);
+          });
+        }
+
+        sendBtn.addEventListener('click', () => {
+          const message = textInput.value.trim();
+          if (message) {
+            processQuery(message);
+            textInput.value = '';
+          }
+        });
+
+        textInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            sendBtn.click();
+          }
+        });
+
+        chatSendBtn.addEventListener('click', () => {
+          const message = chatTextInput.value.trim();
+          if (message) {
+            processQuery(message);
+            chatTextInput.value = '';
+          }
+        });
+
+        chatTextInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            chatSendBtn.click();
+          }
+        });
+
+        clearChatBtn.addEventListener('click', () => {
+          if (confirm('Are you sure you want to clear all chat messages?')) {
+            chatData = [];
+            renderMessages(chatData);
+            
+            // Call backend to clear chat.json file
+            window.pywebview.api.clear_chat().then(response => {
+              console.log('Chat cleared from backend:', response);
+            }).catch(err => {
+              console.error('Error clearing chat:', err);
+            });
+          }
+        });
+
+        function pollChatUpdates() {
+          window.pywebview.api.read_chat_json().then(data => {
+            if (JSON.stringify(data) !== JSON.stringify(chatData)) {
+              chatData = data;
+              renderMessages(chatData);
+            }
+          }).catch(err => {
+            console.error('Error reading chat:', err);
+          });
+        }
+
+        renderMessages(chatData);
+        setInterval(pollChatUpdates, 2000);
+
+        // Main Glow Circle Canvas Animation
+        const canvas = document.getElementById('glowCircle');
+        const ctx = canvas.getContext('2d');
+        let t = 0;
+
+        function drawGlowCircle() {
+          const w = canvas.width;
+          const h = canvas.height;
+          ctx.clearRect(0, 0, w, h);
+
+          ctx.save();
+          ctx.translate(w / 2, h / 2);
+
+          const points = 200;
+          const baseRadius = 120;
+          const amplitude = 10;
+          const waveSpeed = 0.05;
+
+          ctx.beginPath();
+          for (let i = 0; i <= points; i++) {
+            const angle = (i / points) * Math.PI * 2;
+            const offset = Math.sin(angle * 6 + t * waveSpeed) * amplitude;
+            const r = baseRadius + offset;
+            const x = r * Math.cos(angle);
+            const y = r * Math.sin(angle);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.closePath();
+
+          const gradient = ctx.createRadialGradient(0, 0, baseRadius * 0.7, 0, 0, baseRadius * 1.2);
+          gradient.addColorStop(0, 'rgba(0, 255, 255, 0.1)');
+          gradient.addColorStop(1, 'rgba(0, 255, 255, 0)');
+          ctx.fillStyle = gradient;
+          ctx.fill();
+
+          ctx.shadowBlur = 30;
+          ctx.shadowColor = '#00ffff';
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = '#00ffff';
+          ctx.stroke();
+
+          ctx.restore();
+          t += 1.5;
+
+          requestAnimationFrame(drawGlowCircle);
+        }
+
+        drawGlowCircle();
+
+        // Sidebar Glow Circle Canvas Animation
+        const sidebarCanvas = document.getElementById('sidebarGlowCircle');
+        const sidebarCtx = sidebarCanvas.getContext('2d');
+        let sidebarT = 0;
+
+        function drawSidebarGlowCircle() {
+          const w = sidebarCanvas.width;
+          const h = sidebarCanvas.height;
+          sidebarCtx.clearRect(0, 0, w, h);
+
+          sidebarCtx.save();
+          sidebarCtx.translate(w / 2, h / 2);
+
+          const points = 100;
+          const baseRadius = 18;
+          const amplitude = 3;
+          const waveSpeed = 0.05;
+
+          sidebarCtx.beginPath();
+          for (let i = 0; i <= points; i++) {
+            const angle = (i / points) * Math.PI * 2;
+            const offset = Math.sin(angle * 6 + sidebarT * waveSpeed) * amplitude;
+            const r = baseRadius + offset;
+            const x = r * Math.cos(angle);
+            const y = r * Math.sin(angle);
+            if (i === 0) sidebarCtx.moveTo(x, y);
+            else sidebarCtx.lineTo(x, y);
+          }
+          sidebarCtx.closePath();
+
+          const gradient = sidebarCtx.createRadialGradient(0, 0, baseRadius * 0.7, 0, 0, baseRadius * 1.2);
+          gradient.addColorStop(0, 'rgba(0, 255, 255, 0.15)');
+          gradient.addColorStop(1, 'rgba(0, 255, 255, 0)');
+          sidebarCtx.fillStyle = gradient;
+          sidebarCtx.fill();
+
+          sidebarCtx.shadowBlur = 15;
+          sidebarCtx.shadowColor = '#00ffff';
+          sidebarCtx.lineWidth = 1.5;
+          sidebarCtx.strokeStyle = '#00ffff';
+          sidebarCtx.stroke();
+
+          sidebarCtx.restore();
+          sidebarT += 1.5;
+
+          requestAnimationFrame(drawSidebarGlowCircle);
+        }
+
+        drawSidebarGlowCircle();
+
+        console.log('Bro.ai interface loaded successfully!');
+      </script>
+    </body>
+    </html>
+    

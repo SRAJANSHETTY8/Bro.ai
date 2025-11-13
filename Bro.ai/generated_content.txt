@@ -1,0 +1,14 @@
+Dear Srajan,
+
+I've got a solution for you to calculate Fibonacci numbers in Java. You can use a simple recursive function or a more efficient iterative approach. 
+
+In the recursive method, you'll define a function that calls itself with decreasing values until it reaches the base case (usually 0 or 1), at which point it starts returning values back up the call stack. 
+
+Alternatively, you can use a loop to iteratively calculate each Fibonacci number, storing previous values to calculate the next one. This approach is usually more efficient and avoids the risk of stack overflow.
+
+Either way, you'll end up with a function that takes an integer as input (the position of the Fibonacci number you want) and returns the corresponding value.
+
+Let me know if you need more details or the actual code implementation!
+
+Best,
+Syrus
