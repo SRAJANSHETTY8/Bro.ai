@@ -46,6 +46,10 @@ Developer:
   <img src="home.png" width="900">
 </p>
 <p align="center">
+  <img src="chats1.png" width="900">
+</p>
+
+<p align="center">
   <img src="chat.png" width="900">
 </p>
 <p align="center">
