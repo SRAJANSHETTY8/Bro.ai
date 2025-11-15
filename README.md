@@ -43,7 +43,7 @@ Developer:
   <img src="interface.png" width="900">
 </p>
 <p align="center">
-  <img src="home.mp4" width="900">
+  <img src="home.png" width="900">
 </p>
 <p align="center">
   <img src="chats1.png" width="900">
