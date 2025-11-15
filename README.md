@@ -3,7 +3,6 @@
 Full-stack AI assistant implemented with **Python backend + HTML/CSS/JS frontend (PyWebView).
 
 
-Bro.ai is a next-generation AI personal assistant designed to feel like a supportive digital friend.
 Bro.ai is an intelligent virtual personal assistant designed to act like a supportive digital friend who can talk, think, understand, create, and control your system in real time. It combines natural conversation, automation, AI-powered creativity, and a visually modern user interface into one seamless desktop application. Bro.ai listens to your voice, responds naturally, generates images, retrieves real-world information, writes content, opens and controls apps, plays music, and performs system-level actions while maintaining a friendly personality.
 
 ---
