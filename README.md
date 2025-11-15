@@ -1,6 +1,8 @@
 # Bro.ai – Virtual Personal AI Assistant
 
-full-stack AI assistant demo: **Python backend + HTML/CSS/JS frontend (PyWebView).**
+Full-stack AI assistant**Python backend + HTML/CSS/JS frontend (PyWebView).**
+
+
 Bro.ai is a next-generation AI personal assistant designed to feel like a supportive digital friend.
 
 ---
