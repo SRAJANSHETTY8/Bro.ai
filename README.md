@@ -1,8 +1,7 @@
 # Bro.ai – Virtual Personal AI Assistant
 
-![Demo](/img/demo.png)
-
-Simple full-stack AI assistant demo: **Python backend + HTML/CSS/JS frontend (PyWebView).**
+full-stack AI assistant demo: **Python backend + HTML/CSS/JS frontend (PyWebView).**
+Bro.ai is a next-generation AI personal assistant designed to feel like a supportive digital friend.
 
 ---
 
@@ -42,7 +41,6 @@ Install all Python dependencies:
 
 ```powershell
 pip install -r requirements.txt
-TO run:-
 python main.py
 
 ```
