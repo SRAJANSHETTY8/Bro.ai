@@ -33,7 +33,9 @@ Bro.ai is an intelligent virtual personal assistant designed to act like a suppo
 - PyAutoGUI, psutil  
 - requests  
 - langdetect  
-- asyncio  
+- asyncio
+- Machine Learning
+- Ai
 
 ---
 
